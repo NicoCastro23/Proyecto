@@ -1,9 +1,9 @@
 package com.alquieventos.utils;
 
 import com.alquieventos.models.Cliente;
-import com.alquieventos.models.Cupon;
+
 import com.alquieventos.models.Evento;
-import com.alquieventos.models.Compra;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +12,12 @@ public class Database {
     private static Database instance;
     private List<Cliente> clientes;
     private List<Evento> eventos;
-    private List<Cupon> cupones;
-    private List<Compra> compras;
+    
 
     private Database() {
         clientes = new ArrayList<>();
         eventos = new ArrayList<>();
-        cupones = new ArrayList<>();
-        compras = new ArrayList<>();
+    
     }
 
     public static Database getInstance() {
@@ -62,7 +60,7 @@ public class Database {
 
     public Cliente findClienteByEmailAndPassword(String email, String password) {
         return clientes.stream()
-                .filter(cliente -> cliente.getEmail().equals(email) && cliente.getContrasena().equals(password))
+                .filter(cliente -> cliente.getEmail().equals(email) && cliente.getPassword().equals(password))
                 .findFirst()
                 .orElse(null);
     }
@@ -85,20 +83,7 @@ public class Database {
                 .orElse(null);
     }
 
-    public void saveCompra(Compra compra) {
-        compras.add(compra);
-    }
-
-    public Cupon findCuponByCodigo(String codigo) {
-        return cupones.stream()
-                .filter(cupon -> cupon.getCodigo().equals(codigo))
-                .findFirst()
-                .orElse(null);
-    }
-
     public List<Cliente> getClientes() {
         return clientes;
     }
-
-    
 }

@@ -3,6 +3,9 @@ module com.alquieventos {
     requires javafx.fxml;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires java.mail;
+    requires javafx.graphics;
+
 
     opens com.alquieventos to javafx.fxml;
     opens com.alquieventos.controllers to javafx.fxml;

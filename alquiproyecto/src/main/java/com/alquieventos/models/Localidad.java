@@ -3,6 +3,7 @@ package com.alquieventos.models;
 import java.io.Serializable;
 
 public class Localidad implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private double precio;
     private int capacidad;
@@ -13,16 +14,6 @@ public class Localidad implements Serializable {
         this.precio = precio;
         this.capacidad = capacidad;
         this.capacidadInicial = capacidad;
-    }
-
-    public void reducirCapacidad(int cantidad) {
-        if (capacidad >= cantidad) {
-            capacidad -= cantidad;
-        }
-    }
-
-    public void incrementarCapacidad(int cantidad) {
-        capacidad += cantidad;
     }
 
     // Getters y Setters
@@ -53,6 +44,12 @@ public class Localidad implements Serializable {
     public int getCapacidadInicial() {
         return capacidadInicial;
     }
+
+    public void setCapacidadInicial(int capacidadInicial) {
+        this.capacidadInicial = capacidadInicial;
+    }
+
+    
 
     
 }

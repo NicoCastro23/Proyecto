@@ -1,71 +1,42 @@
 package com.alquieventos.controllers;
 
-import com.alquieventos.MainApp;
-import com.alquieventos.models.Administrador;
-import com.alquieventos.models.Cliente;
-import com.alquieventos.services.AuthService;
-import com.alquieventos.services.ClienteService;
+import java.io.IOException;
+
+import com.alquieventos.models.UniEventos;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class LoginController {
-    @FXML
-    private TextField emailField;
-    @FXML
-    private PasswordField passwordField;
-
-    private MainApp mainApp;
-    private AuthService authService;
-    private ClienteService clienteService;
-
-    public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
-
-    public void setAuthService(AuthService authService) {
-        this.authService = authService;
-    }
-
-    public void setClienteService(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
 
     @FXML
-    private void handleLogin() {
-        String email = emailField.getText();
-        String password = passwordField.getText();
+    private TextField txtIdentificacion;
 
-        try {
-            Object user = authService.login(email, password);
-            if (user instanceof Cliente) {
-                Cliente cliente = (Cliente) user;
-                if (!cliente.isActivado()) {
-                    mainApp.showActivationView(cliente);
-                } else {
-                    // Mostrar vista de cliente
-                }
-            } else if (user instanceof Administrador) {
-                // Mostrar vista de administrador
-                mainApp.showAdminView();
+    @FXML
+    private TextField txtContrasena;
+
+    private UniEventos uniEventos = new UniEventos();
+
+    @FXML
+    private void onLogin(ActionEvent event) {
+        String identificacion = txtIdentificacion.getText();
+        String contrasena = txtContrasena.getText();
+
+        if (uniEventos.login(identificacion, contrasena)) {
+            try {
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/com/alquieventos/views/Principal.fxml")));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IllegalArgumentException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Login Error");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+        } else {
+            // Show error message
         }
     }
-
-    @FXML
-    private void handleRegister() {
-        mainApp.showRegisterView();
-    }
-
-    @FXML
-    private void handleAdminRegister() {
-        mainApp.showAdminRegisterView();
-    }
 }
+

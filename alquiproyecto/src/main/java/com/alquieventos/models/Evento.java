@@ -1,50 +1,34 @@
 package com.alquieventos.models;
 
+import java.io.File;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
+
+import javafx.scene.image.Image;
 
 public class Evento implements Serializable {
     private String nombre;
     private String ciudad;
     private String descripcion;
-    private String tipo;
+    private TipoEvento tipo;
     private String imagen;
-    private Date fecha;
-    private String direccion;
+    private LocalDate fecha;
     private List<Localidad> localidades;
-    private double totalRecaudado;
+    
 
-    public Evento(String nombre, String ciudad, String descripcion, String tipo, String imagen, Date fecha, String direccion) {
+    public Evento(String nombre, String ciudad, String descripcion, TipoEvento tipo, String imagen, LocalDate fecha, List<Localidad> localidades) {
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.imagen = imagen;
         this.fecha = fecha;
-        this.direccion = direccion;
-        this.localidades = new LinkedList<>();
-        this.totalRecaudado = 0;
+        this.localidades = localidades;
     }
 
-    public void agregarLocalidad(Localidad localidad) {
-        localidades.add(localidad);
-    }
-
-    public int getCapacidadDisponible() {
-        return localidades.stream().mapToInt(Localidad::getCapacidad).sum();
-    }
-    public double getTotalRecaudado() {
-        return totalRecaudado;
-    }
-
-    public void aumentarRecaudado(double cantidad) {
-        totalRecaudado += cantidad;
-    }
-   
     public String getNombre() {
         return nombre;
     }
@@ -69,46 +53,32 @@ public class Evento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public String getTipo() {
+    public TipoEvento getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoEvento tipo) {
         this.tipo = tipo;
     }
 
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public List< Localidad> getLocalidades() {
+    public List<Localidad> getLocalidades() {
         return localidades;
     }
+    
 
-    public Localidad getLocalidadByName(String nombre) {
-        for (Localidad localidad : localidades) {
-            if (localidad.getNombre().equals(nombre)) {
-                return localidad;
+    public Image getImagen() {
+        if (imagen != null && !imagen.isEmpty()) {
+            File file = new File(imagen);
+            if (file.exists()) {
+                return new Image(file.toURI().toString());
             }
         }
         return null;

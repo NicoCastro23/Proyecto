@@ -1,106 +1,73 @@
 package com.alquieventos.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Cliente extends Usuario implements Observer {
-    private List<Compra> compras;
+
+public class Cliente extends User implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String password;
+    private boolean isVerified;
+    private String verficationCode;
+    private boolean compra;
+    private Map<String, Double> codigosDescuento;
     
-    private String codigoActivacion;
-
-    public Cliente(String cedula, String nombreCompleto, String telefono, String email, String contrasena, boolean activado) {
-        super(cedula, nombreCompleto, telefono, email, contrasena, activado);
-        this.compras = new ArrayList<>();
-        this.activado = false;
-        this.codigoActivacion = generarCodigoActivacion();
-        enviarCodigoActivacion();
+    public Cliente(String id, String name, String phoneNumber, String email, String password){
+        
+        this.password = password;
+        this.isVerified = false;
+        this.verficationCode = GeneradorCodigo.generarCodigo();
+        this.compra = false;
+        this.codigosDescuento = new HashMap<>();
     }
 
-    // Método para registrar un cliente
-    public void registrarse() {
-        // Lógica para registrar el cliente
-        // Enviar código de activación por email
-        enviarCodigoActivacion();
+    public boolean isCompra() {
+        return compra;
     }
 
-    // Método para activar cuenta
-    public boolean activarCuenta(String codigo) {
-        if (this.codigoActivacion.equals(codigo)) {
-            this.activado = true;
-            return true;
-        }
-        return false;
+    public String getPassword() {
+        return password;
     }
 
-    // Método para generar un código de activación
-    private String generarCodigoActivacion() {
-        return UUID.randomUUID().toString();
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    // Método para enviar el código de activación por email
-    private void enviarCodigoActivacion() {
-        // Lógica para enviar el código de activación por correo electrónico
-        System.out.println("Código de activación enviado a " + this.email + ": " + this.codigoActivacion);
+    public boolean isVerified() {
+        return isVerified;
     }
 
-    // Método para realizar una compra
-    public void realizarCompra(Evento evento, Localidad localidad, int cantidad, Cupon cupon) {
-        if (localidad.getCapacidad() >= cantidad) {
-            Compra compra = new Compra(this, evento, localidad, cantidad, cupon);
-            compras.add(compra);
-            localidad.reducirCapacidad(cantidad);
-            evento.aumentarRecaudado(compra.getTotal());
-            enviarConfirmacionCompra(compra);
-        } else {
-            System.out.println("No hay suficiente capacidad en la localidad seleccionada.");
-        }
+    public void setVerified(boolean isVerified) {
+        this.isVerified = isVerified;
     }
 
-    // Método para cancelar una compra
-    public void cancelarCompra(Compra compra) {
-        if (compras.contains(compra)) {
-            compras.remove(compra);
-            compra.getLocalidad().incrementarCapacidad(compra.getCantidad());
-            // Lógica adicional para manejar la cancelación
-        }
+    public String getVerficationCode() {
+        return verficationCode;
     }
 
-    // Método para listar compras
-    public List<Compra> listarCompras() {
-        return compras;
+    public void setVerficationCode(String verficationCode) {
+        this.verficationCode = verficationCode;
     }
 
-    // Método para redimir cupones
-    public void redimirCupon(Cupon cupon) {
-        // Lógica para redimir cupon
-        cupon.setRedimido(true);
+    public void setCompra(boolean compra) {
+        this.compra = compra;
     }
 
-    @Override
-    public void actualizar(String mensaje) {
-        // Lógica para manejar la notificación
-        System.out.println("Notificación para " + nombreCompleto + ": " + mensaje);
+    public double obtenerPorcentajeDescuento(String codigo) {
+        return codigosDescuento.getOrDefault(codigo, 0.0);
     }
 
-    // Método para enviar confirmación de compra por email
-    private void enviarConfirmacionCompra(Compra compra) {
-        // Lógica para enviar confirmación por correo electrónico
-        System.out.println("Confirmación de compra enviada a " + this.email);
+    public void eliminarCodigoDescuento(String codigo) {
+        codigosDescuento.remove(codigo);
     }
 
-    public boolean isActivado() {
-        return activado;
+    public void agregarCodigoDescuento(String codigo, double porcentaje) {
+        codigosDescuento.put(codigo, porcentaje);
     }
 
-    public String getCodigoActivacion() {
-        return codigoActivacion;
+    public boolean validarCodigoDescuento(String codigo) {
+        return codigosDescuento.containsKey(codigo);
     }
-
-    public void setActivado(boolean activado) {
-        this.activado = activado;
-    }
-    
-    
-    
+ 
 }
