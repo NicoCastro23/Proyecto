@@ -48,7 +48,8 @@ public class AdninistradorApp {
                 String ciudad = scanner.nextLine();
                 System.out.print("Descripción: ");
                 String descripcion = scanner.nextLine();
-                System.out.print("Tipo (CONCIERTO, TEATRO, DEPORTE, FESTIVAL, CULTURAL, EMPRESARIAL): ");
+                System.out.print(
+                        "Tipo (FESTIVAL, TEATRO, POLITICO, UNIVERSITARIO, CULTURAL, DEPORTIVO, RELIGIOSO, OTRO): ");
                 TipoEvento tipo = TipoEvento.valueOf(scanner.nextLine().toUpperCase());
                 System.out.print("Ruta de la imagen: ");
                 String rutaImagen = scanner.nextLine();
