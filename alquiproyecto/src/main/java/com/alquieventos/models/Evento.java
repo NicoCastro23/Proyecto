@@ -3,9 +3,8 @@ package com.alquieventos.models;
 import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
+import java.util.List;
 
 import javafx.scene.image.Image;
 
@@ -14,17 +13,18 @@ public class Evento implements Serializable {
     private String ciudad;
     private String descripcion;
     private TipoEvento tipo;
-    private String imagen;
+    private String imagenLocation;
     private LocalDate fecha;
     private List<Localidad> localidades;
-    
 
-    public Evento(String nombre, String ciudad, String descripcion, TipoEvento tipo, String imagen, LocalDate fecha, List<Localidad> localidades) {
+    public Evento(String nombre, String ciudad, String descripcion, TipoEvento tipo, String imagenLocation,
+            LocalDate fecha,
+            List<Localidad> localidades) {
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.descripcion = descripcion;
         this.tipo = tipo;
-        this.imagen = imagen;
+        this.imagenLocation = imagenLocation;
         this.fecha = fecha;
         this.localidades = localidades;
     }
@@ -72,16 +72,23 @@ public class Evento implements Serializable {
     public List<Localidad> getLocalidades() {
         return localidades;
     }
-    
+
+    public void setLocalidades(List<Localidad> localidades) {
+        this.localidades = localidades;
+    }
 
     public Image getImagen() {
-        if (imagen != null && !imagen.isEmpty()) {
-            File file = new File(imagen);
+        if (imagenLocation != null && !imagenLocation.isEmpty()) {
+            File file = new File(imagenLocation);
             if (file.exists()) {
                 return new Image(file.toURI().toString());
             }
         }
         return null;
     }
-    
-} 
+
+    public String getImagenLocation() {
+        return imagenLocation;
+    }
+
+}

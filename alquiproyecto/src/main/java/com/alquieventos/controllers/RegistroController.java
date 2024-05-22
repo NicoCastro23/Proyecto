@@ -1,55 +1,64 @@
 package com.alquieventos.controllers;
 
-
-import java.io.IOException;
-
 import com.alquieventos.models.UniEventos;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class RegistroController {
+public class RegistroController extends GridPane {
+    private UniEventos uniEventos;
+    private Stage stage;
 
-    @FXML
-    private TextField txtIdentificacion;
+    public RegistroController(UniEventos uniEventos, Stage stage) {
+        this.uniEventos = uniEventos;
+        this.stage = stage;
 
-    @FXML
-    private TextField txtNombre;
+        setPadding(new Insets(10));
+        setHgap(10);
+        setVgap(10);
+        setAlignment(Pos.CENTER);
 
-    @FXML
-    private TextField txtTelefono;
+        Label lblIdentificacion = new Label("Identificación:");
+        TextField txtIdentificacion = new TextField();
+        add(lblIdentificacion, 0, 0);
+        add(txtIdentificacion, 1, 0);
 
-    @FXML
-    private TextField txtEmail;
+        Label lblNombre = new Label("Nombre:");
+        TextField txtNombre = new TextField();
+        add(lblNombre, 0, 1);
+        add(txtNombre, 1, 1);
 
-    @FXML
-    private TextField txtContrasena;
+        Label lblTelefono = new Label("Teléfono:");
+        TextField txtTelefono = new TextField();
+        add(lblTelefono, 0, 2);
+        add(txtTelefono, 1, 2);
 
-    private UniEventos uniEventos = new UniEventos();
+        Label lblEmail = new Label("Email:");
+        TextField txtEmail = new TextField();
+        add(lblEmail, 0, 3);
+        add(txtEmail, 1, 3);
 
-    @FXML
-    private void onRegister(ActionEvent event) {
-        String identificacion = txtIdentificacion.getText();
-        String nombre = txtNombre.getText();
-        String telefono = txtTelefono.getText();
-        String email = txtEmail.getText();
-        String contrasena = txtContrasena.getText();
+        Label lblContrasena = new Label("Contraseña:");
+        TextField txtContrasena = new TextField();
+        add(lblContrasena, 0, 4);
+        add(txtContrasena, 1, 4);
 
-        uniEventos.registerClient(identificacion, nombre, telefono, email, contrasena);
+        Button btnRegistrar = new Button("Registrar");
+        btnRegistrar.setOnAction(e -> {
+            String identificacion = txtIdentificacion.getText();
+            String nombre = txtNombre.getText();
+            String telefono = txtTelefono.getText();
+            String email = txtEmail.getText();
+            String contrasena = txtContrasena.getText();
 
-        // Return to inicio scene
-        try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/com/alquieventos/views/Inicio.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            uniEventos.registerClient(identificacion, nombre, telefono, email, contrasena);
+            stage.close();
+        });
+        add(btnRegistrar, 1, 5);
     }
 }
-

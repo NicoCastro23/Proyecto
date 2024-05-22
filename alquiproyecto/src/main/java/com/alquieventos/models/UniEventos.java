@@ -101,7 +101,8 @@ public class UniEventos implements Serializable {
 
     public void sendDiscountCode(String email, String codigo, int porcentaje) {
         try {
-            emailService.sendEmail(email, "Código de Descuento", "Su código de descuento del " + porcentaje + "% es: " + codigo);
+            emailService.sendEmail(email, "Código de Descuento",
+                    "Su código de descuento del " + porcentaje + "% es: " + codigo);
             System.out.println("Correo de descuento enviado a " + email);
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -126,11 +127,10 @@ public class UniEventos implements Serializable {
         guardarDatos();
     }
 
-    
-
     public void agregarEvento(Evento evento) {
         if (buscarEventoPorNombreCiudadFecha(evento.getNombre(), evento.getCiudad(), evento.getFecha()) != null) {
-            System.out.println("El evento " + evento.getNombre() + " en " + evento.getCiudad() + " en la fecha " + evento.getFecha() + " ya está registrado.");
+            System.out.println("El evento " + evento.getNombre() + " en " + evento.getCiudad() + " en la fecha "
+                    + evento.getFecha() + " ya está registrado.");
             return;
         }
         eventos.add(evento);
@@ -147,12 +147,13 @@ public class UniEventos implements Serializable {
         }
     }
 
-    public boolean createAccount(String identificacion, String nombre, String telefono, String email, String contrasena) {
-        if (buscarClientePorIdentificacion(identificacion) != null) {
-            System.out.println("El cliente con identificación " + identificacion + " ya está registrado.");
+    public boolean createAccount(String id, String nombre, String telefono, String email,
+            String contrasena) {
+        if (buscarClientePorIdentificacion(id) != null) {
+            System.out.println("El cliente con identificación " + id + " ya está registrado.");
             return false;
         }
-        registerClient(identificacion, nombre, telefono, email, contrasena);
+        registerClient(id, nombre, telefono, email, contrasena);
         return true;
     }
 
@@ -211,7 +212,8 @@ public class UniEventos implements Serializable {
 
     public Evento buscarEventoPorNombreCiudadFecha(String nombre, String ciudad, LocalDate fecha) {
         for (Evento evento : eventos) {
-            if (evento.getNombre().equals(nombre) && evento.getCiudad().equals(ciudad) && evento.getFecha().equals(fecha)) {
+            if (evento.getNombre().equals(nombre) && evento.getCiudad().equals(ciudad)
+                    && evento.getFecha().equals(fecha)) {
                 return evento;
             }
         }
@@ -244,7 +246,8 @@ public class UniEventos implements Serializable {
                 System.out.print("Contraseña: ");
                 String contrasena = scanner.nextLine();
                 if (createAccount(identificacion, nombre, telefono, email, contrasena)) {
-                    System.out.println("Cuenta creada exitosamente. Verifique su correo electrónico para activar su cuenta y recibir su cupón de descuento.");
+                    System.out.println(
+                            "Cuenta creada exitosamente. Verifique su correo electrónico para activar su cuenta y recibir su cupón de descuento.");
                 } else {
                     System.out.println("No se pudo crear la cuenta. Identificación ya registrada.");
                 }
@@ -327,7 +330,8 @@ public class UniEventos implements Serializable {
             String nombre = scanner.nextLine();
             eventosEncontrados = buscarEventoPorNombre(uniEventos, nombre);
         } else if (opcion == 2) {
-            System.out.print("Ingrese el tipo de evento (CONCIERTO, TEATRO, DEPORTE, FESTIVAL, CULTURAL, EMPRESARIAL): ");
+            System.out
+                    .print("Ingrese el tipo de evento (CONCIERTO, TEATRO, DEPORTE, FESTIVAL, CULTURAL, EMPRESARIAL): ");
             TipoEvento tipo = TipoEvento.valueOf(scanner.nextLine().toUpperCase());
             eventosEncontrados = buscarEventoPorTipo(uniEventos, tipo);
         } else if (opcion == 3) {
@@ -362,7 +366,8 @@ public class UniEventos implements Serializable {
         System.out.println("Localidades disponibles:");
         for (int i = 0; i < eventoSeleccionado.getLocalidades().size(); i++) {
             Localidad localidad = eventoSeleccionado.getLocalidades().get(i);
-            System.out.println((i + 1) + ". " + localidad.getNombre() + " - Capacidad: " + localidad.getCapacidadInicial() + " - Precio: " + localidad.getPrecio());
+            System.out.println((i + 1) + ". " + localidad.getNombre() + " - Capacidad: "
+                    + localidad.getCapacidadInicial() + " - Precio: " + localidad.getPrecio());
         }
         int indiceLocalidad = scanner.nextInt() - 1;
         scanner.nextLine(); // Consumir el salto de línea
@@ -407,9 +412,11 @@ public class UniEventos implements Serializable {
         System.out.print("¿Desea realizar la compra? (si/no): ");
         if (scanner.nextLine().equalsIgnoreCase("si")) {
             localidadSeleccionada.setCapacidadInicial(localidadSeleccionada.getCapacidadInicial() - cantidad);
-            System.out.println("Compra realizada para el evento: " + eventoSeleccionado.getNombre() + " en la localidad: " + localidadSeleccionada.getNombre());
+            System.out.println("Compra realizada para el evento: " + eventoSeleccionado.getNombre()
+                    + " en la localidad: " + localidadSeleccionada.getNombre());
 
-            Factura factura = new Factura(subtotal, total, clienteActual, eventoSeleccionado, localidadSeleccionada, true, UUID.randomUUID().toString());
+            Factura factura = new Factura(subtotal, total, clienteActual, eventoSeleccionado, localidadSeleccionada,
+                    true, UUID.randomUUID().toString());
             facturas.add(factura);
 
             try {
@@ -566,7 +573,5 @@ public class UniEventos implements Serializable {
         }
         return estadisticas;
     }
-    
+
 }
-
-

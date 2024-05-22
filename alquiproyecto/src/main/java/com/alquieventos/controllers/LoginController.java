@@ -2,41 +2,69 @@ package com.alquieventos.controllers;
 
 import java.io.IOException;
 
+import com.alquieventos.models.Administrador;
 import com.alquieventos.models.UniEventos;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
-public class LoginController {
+public class LoginController extends GridPane {
 
-    @FXML
-    private TextField txtIdentificacion;
+    public LoginController(UniEventos uniEventos, Stage stage, Runnable onSuccess, Runnable onAdminSuccess) {
+        setPadding(new Insets(10));
+        setHgap(10);
+        setVgap(10);
+        setAlignment(Pos.CENTER);
 
-    @FXML
-    private TextField txtContrasena;
+        Label lblIdentificacion = new Label("Identificación:");
+        TextField txtIdentificacion = new TextField();
+        add(lblIdentificacion, 0, 0);
+        add(txtIdentificacion, 1, 0);
 
-    private UniEventos uniEventos = new UniEventos();
+        Label lblContrasena = new Label("Contraseña:");
+        PasswordField txtContrasena = new PasswordField();
+        add(lblContrasena, 0, 1);
+        add(txtContrasena, 1, 1);
 
-    @FXML
-    private void onLogin(ActionEvent event) {
-        String identificacion = txtIdentificacion.getText();
-        String contrasena = txtContrasena.getText();
+        Button btnLogin = new Button("Login");
+        btnLogin.setOnAction(e -> {
+            String identificacion = txtIdentificacion.getText();
+            String contrasena = txtContrasena.getText();
 
-        if (uniEventos.login(identificacion, contrasena)) {
-            try {
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/com/alquieventos/views/Principal.fxml")));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (uniEventos.login(identificacion, contrasena)) {
+                stage.close();
+                if (uniEventos.getUsuarioActual() instanceof Administrador) {
+                    onAdminSuccess.run();
+                } else {
+                    onSuccess.run();
+                }
+            } else {
+                showError("Identificación o contraseña incorrecta, o cuenta no verificada.");
             }
-        } else {
-            // Show error message
-        }
+        });
+        add(btnLogin, 1, 2);
+
+        Button btnVolver = new Button("Volver");
+        btnVolver.setOnAction(e -> stage.close());
+        add(btnVolver, 0, 2);
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
-

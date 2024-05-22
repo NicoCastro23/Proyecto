@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Cliente extends User implements Serializable {
     private static final long serialVersionUID = 1L;
     private String password;
@@ -12,9 +11,9 @@ public class Cliente extends User implements Serializable {
     private String verficationCode;
     private boolean compra;
     private Map<String, Double> codigosDescuento;
-    
-    public Cliente(String id, String name, String phoneNumber, String email, String password){
-        
+
+    public Cliente(String id, String name, String phoneNumber, String email, String password) {
+        this.id = id;
         this.password = password;
         this.isVerified = false;
         this.verficationCode = GeneradorCodigo.generarCodigo();
@@ -69,5 +68,5 @@ public class Cliente extends User implements Serializable {
     public boolean validarCodigoDescuento(String codigo) {
         return codigosDescuento.containsKey(codigo);
     }
- 
+
 }

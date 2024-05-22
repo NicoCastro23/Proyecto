@@ -24,12 +24,18 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>13</version>
+            <version>21</version>
         </dependency>
         <dependency>
         <groupId>com.google.zxing</groupId>
         <artifactId>core</artifactId>
         <version>3.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
         <groupId>com.google.zxing</groupId>

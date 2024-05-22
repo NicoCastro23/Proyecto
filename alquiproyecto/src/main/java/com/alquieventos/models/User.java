@@ -2,7 +2,7 @@ package com.alquieventos.models;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     protected String id;
     protected String name;
@@ -10,7 +10,7 @@ public class User implements Serializable{
     protected String email;
 
     public User() {
-        
+
     }
 
     public String getId() {
@@ -43,5 +43,5 @@ public class User implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
-    }   
+    }
 }

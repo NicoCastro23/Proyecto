@@ -5,10 +5,11 @@ module com.alquieventos {
     requires com.google.zxing.javase;
     requires java.mail;
     requires javafx.graphics;
-
+    requires static lombok;
 
     opens com.alquieventos to javafx.fxml;
     opens com.alquieventos.controllers to javafx.fxml;
+
     exports com.alquieventos;
     exports com.alquieventos.controllers;
     exports com.alquieventos.models;
