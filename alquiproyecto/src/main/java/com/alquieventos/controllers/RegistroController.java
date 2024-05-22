@@ -11,13 +11,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class RegistroController extends GridPane {
-    private UniEventos uniEventos;
-    private Stage stage;
 
     public RegistroController(UniEventos uniEventos, Stage stage) {
-        this.uniEventos = uniEventos;
-        this.stage = stage;
-
         setPadding(new Insets(10));
         setHgap(10);
         setVgap(10);

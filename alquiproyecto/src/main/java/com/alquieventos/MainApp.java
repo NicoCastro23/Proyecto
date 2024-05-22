@@ -6,6 +6,7 @@ import com.alquieventos.controllers.CouponController;
 import com.alquieventos.controllers.LoginController;
 import com.alquieventos.controllers.PostLoginController;
 import com.alquieventos.controllers.RegistroController;
+import com.alquieventos.controllers.VerificationController;
 import com.alquieventos.controllers.ViewChartsControlller;
 import com.alquieventos.models.UniEventos;
 
@@ -38,6 +39,14 @@ public class MainApp extends Application {
         Button btnLogin = new Button("Iniciar Sesión");
         btnLogin.setOnAction(e -> showLoginWindow(primaryStage));
         gridPane.add(btnLogin, 1, 1);
+
+        Button btnVerificarse = new Button("Verificarse");
+        btnVerificarse.setOnAction(e -> showVerificationWindow(primaryStage));
+        gridPane.add(btnVerificarse, 0, 2);
+
+        Button btnSalir = new Button("Salir");
+        btnSalir.setOnAction(e -> primaryStage.close());
+        gridPane.add(btnSalir, 1, 2);
 
         Scene scene = new Scene(gridPane, 300, 200);
         primaryStage.setScene(scene);
@@ -107,6 +116,15 @@ public class MainApp extends Application {
         Scene scene = new Scene(viewChartsPane, 800, 600);
         stage.setScene(scene);
         stage.setTitle("Estadísticas de Eventos");
+        stage.show();
+    }
+
+    private void showVerificationWindow(Stage primaryStage) {
+        Stage stage = new Stage();
+        VerificationController verificationPane = new VerificationController(uniEventos, stage);
+        Scene scene = new Scene(verificationPane, 400, 200);
+        stage.setScene(scene);
+        stage.setTitle("Verificarse");
         stage.show();
     }
 

@@ -202,8 +202,14 @@ public class UniEventos implements Serializable {
     }
 
     public Cliente buscarClientePorIdentificacion(String identificacion) {
+        if (identificacion == null) {
+            // Maneja el caso de identificación nula si es necesario, por ejemplo, lanzar
+            // una excepción o retornar null
+            return null;
+        }
+
         for (Cliente cliente : clientes) {
-            if (cliente.getId().equals(identificacion)) {
+            if (identificacion.equals(cliente.getIdentificacion())) {
                 return cliente;
             }
         }
@@ -546,7 +552,7 @@ public class UniEventos implements Serializable {
     public List<Factura> obtenerComprasCliente(String identificacionCliente) {
         List<Factura> comprasCliente = new ArrayList<>();
         for (Factura factura : facturas) {
-            if (factura.getCliente().getId().equals(identificacionCliente)) {
+            if (factura.getCliente().getIdentificacion().equals(identificacionCliente)) {
                 comprasCliente.add(factura);
             }
         }

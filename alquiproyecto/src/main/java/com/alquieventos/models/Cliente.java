@@ -13,7 +13,6 @@ public class Cliente extends User implements Serializable {
     private Map<String, Double> codigosDescuento;
 
     public Cliente(String id, String name, String phoneNumber, String email, String password) {
-        this.id = id;
         this.password = password;
         this.isVerified = false;
         this.verficationCode = GeneradorCodigo.generarCodigo();

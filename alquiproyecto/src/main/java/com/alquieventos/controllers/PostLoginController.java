@@ -135,7 +135,7 @@ public class PostLoginController extends VBox {
 
     private void showListaComprasWindow() {
         Cliente clienteActual = (Cliente) uniEventos.getUsuarioActual();
-        List<Factura> compras = uniEventos.obtenerComprasCliente(clienteActual.getId());
+        List<Factura> compras = uniEventos.obtenerComprasCliente(clienteActual.getIdentificacion());
 
         Stage comprasStage = new Stage();
         GridPane gridPane = new GridPane();
