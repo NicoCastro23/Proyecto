@@ -15,11 +15,12 @@ public class Cliente extends User implements Serializable {
     public Cliente(String identidicacion, String name, String phoneNumber, String email, String password) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.email = email;
         this.identifiacion = identidicacion;
         this.password = password;
         this.isVerified = false;
         this.verificationCode = GeneradorCodigo.generarCodigo();
-        System.out.println("Código de verificación generado: " + this.verificationCode); // Debugging
+
         this.compra = false;
         this.codigosDescuento = new HashMap<>();
     }

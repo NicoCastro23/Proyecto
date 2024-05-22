@@ -17,7 +17,7 @@ public class User implements Serializable {
         return identifiacion;
     }
 
-    public void setId(String identificacion) {
+    public void setIdentificacion(String identificacion) {
         this.identifiacion = identifiacion;
     }
 

@@ -34,21 +34,21 @@ public class MainApp extends Application {
 
         Button btnRegistrarse = new Button("Registrarse");
         btnRegistrarse.setOnAction(e -> showRegisterWindow(primaryStage));
-        gridPane.add(btnRegistrarse, 0, 1);
+        gridPane.add(btnRegistrarse, 1, 1);
 
         Button btnLogin = new Button("Iniciar Sesión");
         btnLogin.setOnAction(e -> showLoginWindow(primaryStage));
-        gridPane.add(btnLogin, 1, 1);
+        gridPane.add(btnLogin, 0, 1);
 
         Button btnVerificarse = new Button("Verificarse");
         btnVerificarse.setOnAction(e -> showVerificationWindow(primaryStage));
-        gridPane.add(btnVerificarse, 0, 2);
+        gridPane.add(btnVerificarse, 1, 2);
 
         Button btnSalir = new Button("Salir");
         btnSalir.setOnAction(e -> primaryStage.close());
-        gridPane.add(btnSalir, 1, 2);
+        gridPane.add(btnSalir, 0, 2);
 
-        Scene scene = new Scene(gridPane, 300, 200);
+        Scene scene = new Scene(gridPane, 300, 300);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Inicio");
         primaryStage.show();
@@ -110,21 +110,21 @@ public class MainApp extends Application {
         stage.show();
     }
 
-    private void showViewChartsPane(Stage primaryStage) {
-        Stage stage = new Stage();
-        ViewChartsControlller viewChartsPane = new ViewChartsControlller(uniEventos, stage);
-        Scene scene = new Scene(viewChartsPane, 800, 600);
-        stage.setScene(scene);
-        stage.setTitle("Estadísticas de Eventos");
-        stage.show();
-    }
-
     private void showVerificationWindow(Stage primaryStage) {
         Stage stage = new Stage();
         VerificationController verificationPane = new VerificationController(uniEventos, stage);
         Scene scene = new Scene(verificationPane, 400, 200);
         stage.setScene(scene);
         stage.setTitle("Verificarse");
+        stage.show();
+    }
+
+    private void showViewChartsPane(Stage primaryStage) {
+        Stage stage = new Stage();
+        ViewChartsControlller viewChartsPane = new ViewChartsControlller(uniEventos, stage);
+        Scene scene = new Scene(viewChartsPane, 800, 600);
+        stage.setScene(scene);
+        stage.setTitle("Estadísticas de Eventos");
         stage.show();
     }
 

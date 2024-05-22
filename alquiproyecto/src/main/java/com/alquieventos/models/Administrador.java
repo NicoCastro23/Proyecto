@@ -8,6 +8,8 @@ public class Administrador extends User {
     private String password;
 
     private Administrador(String id, String name, String phoneNumber, String email, String password) {
+        this.name = name;
+        this.email = email;
         this.password = password;
     }
 
@@ -27,4 +29,5 @@ public class Administrador extends User {
     public String getPassword() {
         return password;
     }
+
 }

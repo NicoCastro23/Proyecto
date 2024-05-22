@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AdninistradorApp",
+            "request": "launch",
+            "mainClass": "com.alquieventos/com.alquieventos.AdninistradorApp",
+            "projectName": "alquiproyecto"
+        },
+        {
+            "type": "java",
+            "name": "AdministratorApp",
+            "request": "launch",
+            "mainClass": "com.alquieventos/com.alquieventos.AdministratorApp",
+            "projectName": "alquiproyecto"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

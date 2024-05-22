@@ -94,7 +94,6 @@ public class UniEventos implements Serializable {
         try {
             emailService.sendEmail(email, "Código de Verificación", "Su código de verificación es: " + codigo);
             System.out.println("Correo de verificación enviado a " + email);
-            System.out.println("Correo de verificación enviado a " + email + " con el código: " + codigo); // Debugging
         } catch (MessagingException e) {
             e.printStackTrace();
         }
