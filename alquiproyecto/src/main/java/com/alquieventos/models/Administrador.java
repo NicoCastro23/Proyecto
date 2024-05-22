@@ -1,7 +1,6 @@
 package com.alquieventos.models;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Administrador extends User {
@@ -11,7 +10,6 @@ public class Administrador extends User {
     private Administrador(String id, String name, String phoneNumber, String email, String password) {
         this.password = password;
     }
-    
 
     public static Administrador getInstance() {
         if (instance == null) {
@@ -20,10 +18,11 @@ public class Administrador extends User {
         return instance;
     }
 
-    public void gestionarEvento(UniEventos uniEventos, String nombre, String ciudad, String descripcion, TipoEvento tipo, String rutaImagen, LocalDate fecha, List<Localidad> localidades) {
+    public void gestionarEvento(UniEventos uniEventos, String nombre, String ciudad, String descripcion,
+            TipoEvento tipo, String rutaImagen, LocalDate fecha, List<Localidad> localidades) {
         Evento evento = new Evento(nombre, ciudad, descripcion, tipo, rutaImagen, fecha, localidades);
         uniEventos.agregarEvento(evento);
-    }   
+    }
 
     public String getPassword() {
         return password;

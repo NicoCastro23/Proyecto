@@ -94,6 +94,7 @@ public class UniEventos implements Serializable {
         try {
             emailService.sendEmail(email, "Código de Verificación", "Su código de verificación es: " + codigo);
             System.out.println("Correo de verificación enviado a " + email);
+            System.out.println("Correo de verificación enviado a " + email + " con el código: " + codigo); // Debugging
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -119,8 +120,8 @@ public class UniEventos implements Serializable {
         clientes.add(cliente);
         System.out.println("Cliente registrado: " + nombre);
 
+        sendVerificationCode(email, cliente.getVerificationCode());
         // Enviar correo de verificación y código de descuento del 15%
-        sendVerificationCode(email, cliente.getVerficationCode());
         String codigoDescuento = GeneradorCodigo.generarCodigo();
         cliente.agregarCodigoDescuento(codigoDescuento, 0.15);
         sendDiscountCode(email, codigoDescuento, 15);
@@ -190,29 +191,44 @@ public class UniEventos implements Serializable {
 
     public boolean verificarCodigo(String identificacion, String codigo) {
         Cliente cliente = buscarClientePorIdentificacion(identificacion);
-        if (cliente != null && cliente.getVerficationCode().equals(codigo)) {
+
+        if (cliente == null) {
+            System.out.println("Cliente no encontrado.");
+            return false;
+        }
+
+        String storedCode = cliente.getVerificationCode();
+        System.out.println("Código almacenado: " + storedCode); // Debugging
+        System.out.println("Código ingresado: " + codigo); // Debugging
+
+        if (storedCode != null && storedCode.equals(codigo)) {
             cliente.setVerified(true);
             System.out.println("Cuenta verificada exitosamente.");
             guardarDatos();
             return true;
         } else {
-            System.out.println("Código de verificación incorrecto.");
+            System.out.println("Código de verificación incorrecto.Intenta de nuevo");
             return false;
         }
     }
 
     public Cliente buscarClientePorIdentificacion(String identificacion) {
         if (identificacion == null) {
-            // Maneja el caso de identificación nula si es necesario, por ejemplo, lanzar
-            // una excepción o retornar null
+            System.out.println("La identificación proporcionada es nula.");
             return null;
         }
 
+        System.out.println("Buscando cliente con identificación: " + identificacion);
+
         for (Cliente cliente : clientes) {
+            System.out.println("Comparando con cliente: " + cliente.getIdentificacion());
             if (identificacion.equals(cliente.getIdentificacion())) {
+                System.out.println("Cliente encontrado: " + cliente.getName());
                 return cliente;
             }
         }
+
+        System.out.println("Cliente con identificación " + identificacion + " no encontrado.");
         return null;
     }
 

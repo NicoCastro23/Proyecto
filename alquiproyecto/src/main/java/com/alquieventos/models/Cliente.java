@@ -8,14 +8,18 @@ public class Cliente extends User implements Serializable {
     private static final long serialVersionUID = 1L;
     private String password;
     private boolean isVerified;
-    private String verficationCode;
+    private String verificationCode;
     private boolean compra;
     private Map<String, Double> codigosDescuento;
 
-    public Cliente(String id, String name, String phoneNumber, String email, String password) {
+    public Cliente(String identidicacion, String name, String phoneNumber, String email, String password) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.identifiacion = identidicacion;
         this.password = password;
         this.isVerified = false;
-        this.verficationCode = GeneradorCodigo.generarCodigo();
+        this.verificationCode = GeneradorCodigo.generarCodigo();
+        System.out.println("Código de verificación generado: " + this.verificationCode); // Debugging
         this.compra = false;
         this.codigosDescuento = new HashMap<>();
     }
@@ -40,12 +44,12 @@ public class Cliente extends User implements Serializable {
         this.isVerified = isVerified;
     }
 
-    public String getVerficationCode() {
-        return verficationCode;
+    public String getVerificationCode() {
+        return verificationCode;
     }
 
     public void setVerficationCode(String verficationCode) {
-        this.verficationCode = verficationCode;
+        this.verificationCode = verficationCode;
     }
 
     public void setCompra(boolean compra) {
